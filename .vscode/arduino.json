@@ -1,6 +1,7 @@
 {
-  "board": "arduino:avr:uno",
-  "port": "/dev/ttyACM0",
-  "sketch": "tutorial/BareMinimum/BareMinimum.ino",
-  "programmer": "arduino:avrispmkii"
+    "board": "arduino:avr:nano",
+    "port": "/dev/ttyACM0",
+    "sketch": "tutorial/Display/lcd.ino",
+    "programmer": "arduino:avrispmkii",
+    "configuration": "cpu=atmega328"
 }

@@ -16,8 +16,8 @@
             "intelliSenseMode": "gcc-x64",
             "includePath": [
                 "/home/jhomani/Downloads/arduino-1.8.19/hardware/arduino/avr/cores/arduino",
-                "/home/jhomani/Downloads/arduino-1.8.19/hardware/arduino/avr/variants/standard",
-                "/home/jhomani/Downloads/arduino-1.8.19/libraries/LiquidCrystal/src",
+                "/home/jhomani/Downloads/arduino-1.8.19/hardware/arduino/avr/variants/eightanaloginputs",
+                "/home/jhomani/Arduino/libraries/LiquidCrystal/src",
                 "/home/jhomani/Downloads/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include",
                 "/home/jhomani/Downloads/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include-fixed",
                 "/home/jhomani/Downloads/arduino-1.8.19/hardware/tools/avr/avr/include"
@@ -30,7 +30,7 @@
             "defines": [
                 "F_CPU=16000000L",
                 "ARDUINO=10819",
-                "ARDUINO_AVR_UNO",
+                "ARDUINO_AVR_NANO",
                 "ARDUINO_ARCH_AVR",
                 "__DBL_MIN_EXP__=(-125)",
                 "__HQ_FBIT__=15",

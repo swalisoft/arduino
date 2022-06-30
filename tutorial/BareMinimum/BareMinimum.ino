@@ -1,53 +1,61 @@
-// search on setting > "C_Cpp.clang_format_fallbackStyle" change "VS Code" >
-// "Google"
 
-#include <LiquidCrystal.h>
+#include <TinyGPS++.h>
+#include <AltSoftSerial.h>
+//--------------------------------------------------------------
+//GPS Module RX pin to Arduino 9
+//GPS Module TX pin to Arduino 8
+AltSoftSerial neogps;
+TinyGPSPlus gps;
 
-const int firstPin = 2;
-const int secondPin = 3;
+// Size of the geo fence (in meters)
+const float maxDistance = 30;
 
-int rs=7;
-int en=8;
-int d4=9;
-int d5=10;
-int d6=11;
-int d7=12;
+//--------------------------------------------------------------
+float initialLatitude = 0;
+float initialLongitude = 0;
 
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+float latitude, longitude;
+//--------------------------------------------------------------
+
+void getGps(float& latitude, float& longitude);
 
 void setup() {
-  /* params:
-   *  0: What port we'll use 0-13
-   *  1: should be INPUT u OUTPUT
-   */
-//  pinMode(firstPin, OUTPUT);
-//  pinMode(secondPin, OUTPUT);
+  Serial.begin(9600);
 
-  lcd.begin(16,2);
-
-  // Serial.begin(9600);
-  // Serial.println(HIGH);
-  // Serial.println(LOW);
+  neogps.begin(9600);
 }
 
 void loop() {
-  /* params:
-   *  0: What port we'll use 0-13
-   *  1: should be HIGH u LOW
-   */
+  //--------------------------------------------------------------
+  getGps(latitude, longitude);
+  //--------------------------------------------------------------
+  //float distance = getDistance(latitude, longitude, initialLatitude, initialLongitude);
+  //--------------------------------------------------------------
+  Serial.print("Latitude= "); Serial.println(latitude, 6);
+  Serial.print("Lngitude= "); Serial.println(longitude, 6);
 
-  lcd.setCursor(0,0);
-  lcd.print("Aron Puto");
-//
-//  for (int i = 2; i < 4; i++) {
-//    if (i % 2 == 0) {
-//      digitalWrite(firstPin, 1);
-//      digitalWrite(secondPin, 0);
-//    } else {
-//      digitalWrite(firstPin, 0);
-//      digitalWrite(secondPin, 1);
-//    }
-//
-//    delay(500);  // on milliseconds
-//  }
+  delay(1000);
+}
+
+void getGps(float& latitude, float& longitude) {
+  // Can take up to 60 seconds
+  boolean newData = false;
+  for (unsigned long start = millis(); millis() - start < 2000;){
+    while (neogps.available()){
+      if (gps.encode(neogps.read())){
+        newData = true;
+        break;
+      }
+    }
+  }
+  
+  if (newData) {
+    latitude = gps.location.lat();
+    longitude = gps.location.lng();
+    newData = false;
+  } else {
+    Serial.println("No GPS data is available");
+    latitude = 0;
+    longitude = 0;
+  }
 }
